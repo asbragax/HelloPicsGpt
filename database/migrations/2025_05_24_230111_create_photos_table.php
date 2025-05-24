@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-         Schema::create('photos', function (Blueprint $table) {
+        Schema::create('photos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained()->onDelete('cascade');
+            $table->foreignId('pedido_produto_id')->constrained('pedido_produto')->onDelete('cascade');
             $table->string('filename');
             $table->text('caption')->nullable();
-            $table->integer('position')->default(0); // ordem no pack
+            $table->integer('position')->default(0);
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

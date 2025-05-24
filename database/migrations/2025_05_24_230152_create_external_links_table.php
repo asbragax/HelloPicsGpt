@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('external_links', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained()->onDelete('cascade');
+            $table->foreignId('pedido_id')
+                ->constrained('pedidos')
+                ->onDelete('cascade');
             $table->text('url');
             $table->boolean('valid')->default(false);
             $table->text('notes')->nullable();
