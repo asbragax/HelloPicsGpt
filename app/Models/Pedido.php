@@ -43,4 +43,22 @@ class Pedido extends Model
             'id'                   // local key on pedido_produto
         );
     }
+
+    public function statusLogs()
+    {
+        return $this->hasMany(StatusLog::class);
+    }
+
+    public function atualizarStatus($novoStatus)
+    {
+        if ($this->status !== $novoStatus) {
+            $this->status = $novoStatus;
+            $this->save();
+
+            $this->statusLogs()->create([
+                'status' => $novoStatus,
+                'changed_at' => now()
+            ]);
+        }
+    }
 }

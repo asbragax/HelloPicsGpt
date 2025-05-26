@@ -42,6 +42,7 @@
                     </span>
                 </td>
                 <td>
+                    <a href="{{ route('admin.produtos.show', $produto->id) }}" class="btn btn-sm btn-info">Visualizar</a>
                     <a href="{{ route('admin.produtos.edit', $produto) }}" class="btn btn-sm btn-warning">Editar</a>
                     <form action="{{ route('admin.produtos.destroy', $produto) }}" method="POST" class="d-inline" onsubmit="return confirm('Deseja excluir?')">
                         @csrf @method('DELETE')

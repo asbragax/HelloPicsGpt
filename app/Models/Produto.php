@@ -25,4 +25,16 @@ class Produto extends Model
             ->withPivot('quantidade', 'preco_unitario')
             ->withTimestamps();
     }
+
+    // Produto.php
+    public function fotos()
+    {
+        return $this->hasMany(ProdutoFoto::class);
+    }
+
+    // Produto.php
+    public function fotoPrincipal()
+    {
+        return $this->hasOne(ProdutoFoto::class)->where('principal', true);
+    }
 }

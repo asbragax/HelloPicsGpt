@@ -23,14 +23,13 @@ class OrderController extends Controller
             ->get();
 
         return view('admin.pedidos.show', compact('pedido', 'pedidoProdutos'));
-
     }
 
 
     public function update(Request $request, $id)
     {
         $pedido = Pedido::findOrFail($id);
-        $pedido->update(['status' => $request->status]);
+        $pedido->atualizarStatus($request->status);
 
         return redirect()->route('admin.pedidos.show', $pedido->id)->with('success', 'Status atualizado.');
     }

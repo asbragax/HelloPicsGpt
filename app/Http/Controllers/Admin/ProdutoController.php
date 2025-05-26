@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -20,8 +21,14 @@ class ProdutoController extends Controller
 
     public function store(Request $request)
     {
-        Produto::create($request->all());
-        return redirect()->route('admin.produtos.index')->with('success', 'Produto criado com sucesso!');
+        $produto = Produto::create($request->validate([
+            'nome' => 'required|string',
+            'descricao' => 'nullable|string',
+            'preco' => 'required|numeric',
+            'photo_limit' => 'required|integer',
+            'includes_mold' => 'required|boolean',
+        ]));
+        return redirect()->route('admin.produtos.show', $produto->id)->with('success', 'Produto criado com sucesso.');
     }
 
     public function edit(Produto $produto)
@@ -32,8 +39,15 @@ class ProdutoController extends Controller
     public function update(Request $request, Produto $produto)
     {
         $produto->update($request->all());
-        return redirect()->route('admin.produtos.index')->with('success', 'Produto atualizado!');
+        return redirect()->route('admin.produtos.show', $produto->id)->with('success', 'Produto criado com sucesso.');
     }
+
+    public function show($id)
+    {
+        $produto = Produto::with(['fotos', 'fotoPrincipal'])->findOrFail($id);
+        return view('admin.produtos.show', compact('produto'));
+    }
+
 
     public function destroy(Produto $produto)
     {

@@ -89,6 +89,12 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
 
     //Produtos
     Route::resource('produtos', ProdutoController::class)->names('produtos');
+    Route::post('produtos/{produto}/fotos', [\App\Http\Controllers\Admin\ProdutoFotoController::class, 'store'])->name('produtos.fotos.store');
+    Route::delete('produtos/fotos/{id}', [\App\Http\Controllers\Admin\ProdutoFotoController::class, 'destroy'])->name('produtos.fotos.destroy');
+    Route::post('produtos/fotos/{id}/principal', [\App\Http\Controllers\Admin\ProdutoFotoController::class, 'marcarPrincipal'])->name('produtos.fotos.principal');
+
+    // Molduras
+    Route::resource('molduras', \App\Http\Controllers\Admin\MolduraController::class);
 });
 
 
